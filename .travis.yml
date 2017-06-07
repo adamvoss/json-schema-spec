@@ -1,0 +1,20 @@
+language: python
+install:
+- pip install xml2rfc
+before_script:
+- TAG=$(git tag -l --points-at HEAD)
+script:
+- xml2rfc jsonschema-core.xml --basename=jsonschema-core-$TAG --text --html
+- xml2rfc jsonschema-validation.xml --basename=jsonschema-validation-$TAG --text --html
+- xml2rfc jsonschema-hyperschema.xml --basename=jsonschema-hyperschema-$TAG --text --html
+deploy:
+  provider: releases
+  api_key:
+    secure: GwqBAv10t3T5wW9Q28Zr+QH93kGNGHInZk92VbEeZ+2Efnx2wtrb/XgMaQYjuTkk6DSWVPzoOkiON9iEY62EkD37F4M4Xd8pgQmeOR46zwT568daH+M49/2/HnHlzejHInFNa+0hxy2LjTXZt2Bvqoi9Hb7o6c0IdMwbAX3NrqNc6Ky2UPDoXZuUz6Rbz/6vWsNwEMEKn52Zsmgg6OVw1skZe+2ZaHDCH1TkTLmlk1IgXHTZHMXn3LcPv8tzx/yoPzjIpojzeg+TbAYApzB6UL7d81i4pb4PzmKsWp1UPEHI/nWDbeK8GucYN4BrfK22vKoSgdASfgL8LfWhSvwdz8CskjT2Lr+o+kF+3dMfOwyh9mMTtuqhHdW82pgvKIURrz7oSMDzkeDSg+bjz/BkU5lmuJPSTCMWYaGb9d295Azn+pRTN7wbrxpnGnUodcvtDFijIldhJh9q12iWBdfgLXfWeUOvrtZCQDldPhMerk9oiUJjTtZnlZkKxSZZWAhGEDP86XTa4XvKPC/R9WiQRtpwbdR/DtQQyFxfLJZ1gnsQYAJuI0KQ4PWkB8fI3Cvlime9/BI3d5YmsZvNiNviKn4m4fgAk0amV7N6z40laoWZ8y+laHxdBdMfD3MG8QS9ncLZJ7rfTUT9RAoPhFAa8lodI3wXk7PR7XbhKjmwczM=
+  skip_cleanup: true
+  file:
+  - "*.html"
+  - "*.txt"
+  file_glob: true
+  on:
+    tags: true
